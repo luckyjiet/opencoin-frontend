@@ -32,21 +32,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
-
-      - name: Setup Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@1.22.22 --activate
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm install --legacy-peer-deps
 
       - name: Run tests
-        run: yarn test --watchAll=false
+        run: npm test -- --watchAll=false
 
       - name: Build test
-        run: yarn build:test
+        run: npm run build:test
 
       - name: Configure SSH
         shell: bash
