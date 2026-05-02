@@ -34,7 +34,7 @@ export const USDT: { [chainId: number]: Token } = {
   ),
 }
   //busd换成usdt
-export const WBNB = new Token(ChainId.MAINNET, '0xae13d989dac2f0debff460ac112a837c89baa7cd', 18, 'WBNB', 'Wrapped BNB')
+export const WBNB = new Token(ChainId.MAINNET, '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd', 18, 'WBNB', 'Wrapped BNB')
   //wbnb换成wtre
 export const USDT1 = new Token(ChainId.MAINNET, '0x4ED112510bc3E3FF42a82F5C44a0F372b3a462d3', 18, 'USDT', 'USDT')
 

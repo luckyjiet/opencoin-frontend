@@ -96,6 +96,7 @@
     "@types/react-transition-group": "^4.4.1",
     "@types/simplemde": "^1.11.7",
     "eslint": "^7.26.0",
+    "patch-package": "^8.0.1",
     "prettier": "^2.3.0",
     "source-map-explorer": "^2.5.2",
     "ts-node": "^9.1.1"
