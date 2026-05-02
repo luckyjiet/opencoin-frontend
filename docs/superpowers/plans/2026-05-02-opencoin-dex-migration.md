@@ -27,7 +27,7 @@
 
 - Router: `0x036f2081ac476492FdF4b94877a608E72bf4826E`
 - Factory: `0xeF7290f5dC0E6752724d3605875d59AF5a2eE55c`
-- Init code hash: `0x981e49342e5cea6c3697d4e2e5a10c749866dd92695b4626dc7148c82e87d102`
+- Init code hash: `0x8abce0937a764fb0abfbec65b1c0c46365417c964627f24f8ef3c59bc1571f5a`
 - BSC testnet WBNB: `0xae13d989dac2f0debff460ac112a837c89baa7cd`
 - LP permit domain name: `OpenCoin LPs`
 
@@ -124,7 +124,7 @@ import { ChainId, FACTORY_ADDRESS, INIT_CODE_HASH, Token, Pair, WETH } from '@pa
 describe('patched Pancake SDK constants', () => {
   it('uses OpenCoin factory and init code hash', () => {
     expect(FACTORY_ADDRESS).toBe('0xeF7290f5dC0E6752724d3605875d59AF5a2eE55c')
-    expect(INIT_CODE_HASH).toBe('0x981e49342e5cea6c3697d4e2e5a10c749866dd92695b4626dc7148c82e87d102')
+    expect(INIT_CODE_HASH).toBe('0x8abce0937a764fb0abfbec65b1c0c46365417c964627f24f8ef3c59bc1571f5a')
   })
 
   it('uses the BSC testnet wrapped native token', () => {
@@ -135,7 +135,7 @@ describe('patched Pancake SDK constants', () => {
     const tokenA = new Token(ChainId.TESTNET, '0x0000000000000000000000000000000000000001', 18, 'A', 'Token A')
     const tokenB = new Token(ChainId.TESTNET, '0x0000000000000000000000000000000000000002', 18, 'B', 'Token B')
 
-    expect(Pair.getAddress(tokenA, tokenB)).toBe('0xf6Ea39113B009337F28b81C6997b6dF7cFA9fd7E')
+    expect(Pair.getAddress(tokenA, tokenB)).toBe('0xBF9F7b68f9dBAC7A25D1F8C2Cb21e343620eBeC9')
   })
 })
 ```
@@ -185,7 +185,7 @@ Set every runtime/type occurrence of:
 
 ```ts
 FACTORY_ADDRESS = '0xeF7290f5dC0E6752724d3605875d59AF5a2eE55c'
-INIT_CODE_HASH = '0x981e49342e5cea6c3697d4e2e5a10c749866dd92695b4626dc7148c82e87d102'
+INIT_CODE_HASH = '0x8abce0937a764fb0abfbec65b1c0c46365417c964627f24f8ef3c59bc1571f5a'
 WETH[ChainId.TESTNET] = '0xae13d989dac2f0debff460ac112a837c89baa7cd'
 ```
 
