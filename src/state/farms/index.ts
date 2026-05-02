@@ -1,0 +1,129 @@
+//@ts-nocheck
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import pools2 from 'config/constants/pools2'
+import farms from 'config/constants/farms'
+import priceHelperLpsConfig from 'config/constants/priceHelperLps'
+import fetchFarms from './fetchFarms'
+import fetchFarmsPrices from './fetchFarmsPrices'
+import {
+  fetchFarmUserEarnings,
+  fetchFarmUserAllowances,
+  fetchFarmUserTokenBalances,
+  fetchFarmUserStakedBalances,
+} from './fetchFarmUser'
+import { FarmsState, Farm } from '../types'
+import { updateFarmList } from './actions'
+
+const getList = () => {
+  const isPools2 = window.location.hash.includes('/pools2')
+  return isPools2 ? pools2 : farms
+}
+
+const noAccountFarmConfig = getList().map((farm) => ({
+  ...farm,
+  userData: {
+    allowance: '0',
+    tokenBalance: '0',
+    stakedBalance: '0',
+    earnings: '0',
+  },
+}))
+
+const initialState: FarmsState = { data: noAccountFarmConfig, loadArchivedFarmsData: false, userDataLoaded: false }
+
+// Async thunks
+export const fetchFarmsPublicDataAsync = createAsyncThunk<Farm[], number[]>(
+  'farms/fetchFarmsPublicDataAsync',
+  async (pids) => {
+    const farmsToFetch = getList()
+
+    
+    // Add price helper farms
+    const farmsWithPriceHelpers = farmsToFetch.concat(priceHelperLpsConfig)
+
+    const farms = await fetchFarms(farmsWithPriceHelpers)
+    const farmsWithPrices = await fetchFarmsPrices(farms)
+
+    // Filter out price helper LP config farms
+    const farmsWithoutHelperLps = farmsWithPrices.filter((farm: Farm) => {
+      return farm.pid || farm.pid === 0
+    })
+
+    return farmsWithoutHelperLps
+  },
+)
+
+interface FarmUserDataResponse {
+  pid: number
+  allowance: string
+  tokenBalance: string
+  stakedBalance: string
+  earnings: string
+}
+
+export const fetchFarmUserDataAsync = createAsyncThunk<FarmUserDataResponse[], { account: string; pids: number[] }>(
+  'farms/fetchFarmUserDataAsync',
+  async ({ account, pids }) => {
+    
+    const isPools2 = window.location.hash.includes('/pools2')
+    const farmsToFetch = getList()
+    const userFarmAllowances = await fetchFarmUserAllowances(account, farmsToFetch, isPools2)
+    
+    const userFarmTokenBalances = await fetchFarmUserTokenBalances(account, farmsToFetch)
+    const userStakedBalances = await fetchFarmUserStakedBalances(account, farmsToFetch, isPools2)
+    const userFarmEarnings = await fetchFarmUserEarnings(account, farmsToFetch, isPools2)
+
+    return userFarmAllowances.map((farmAllowance, index) => {
+      return {
+        pid: farmsToFetch[index].pid,
+        allowance: userFarmAllowances[index],
+        tokenBalance: userFarmTokenBalances[index],
+        stakedBalance: userStakedBalances[index],
+        earnings: userFarmEarnings[index],
+      }
+    })
+  },
+)
+
+export const farmsSlice = createSlice({
+  name: 'Farms',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    // Update farms with live data
+    builder.addCase(fetchFarmsPublicDataAsync.fulfilled, (state, action) => {
+      state.data = state.data.map((farm) => {
+        const liveFarmData = action.payload.find((farmData) => farmData.pid === farm.pid)
+        return { ...farm, ...liveFarmData }
+      })
+    })
+
+    // Update farms with user data
+    builder.addCase(fetchFarmUserDataAsync.fulfilled, (state, action) => {
+      action.payload.forEach((userDataEl) => {
+        const { pid } = userDataEl
+        const index = state.data.findIndex((farm) => farm.pid === pid)
+        state.data[index] = { ...state.data[index], userData: userDataEl }
+      })
+      state.userDataLoaded = true
+    })
+    builder.addCase(updateFarmList, (state, action) => {
+
+      state.data = getList().map((farm) => ({
+        ...farm,
+        userData: {
+          allowance: '0',
+          tokenBalance: '0',
+          stakedBalance: '0',
+          earnings: '0',
+        },
+      }))
+
+      
+    })
+  },
+})
+
+// Actions
+
+export default farmsSlice.reducer

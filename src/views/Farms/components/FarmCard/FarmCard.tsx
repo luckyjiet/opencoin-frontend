@@ -1,0 +1,123 @@
+//@ts-nocheck
+import React, { useState } from 'react'
+import BigNumber from 'bignumber.js'
+import styled from 'styled-components'
+import { Card, Flex, Text, Skeleton } from '@pancakeswap/uikit'
+import { Farm } from 'state/types'
+import { getTrueScanLink } from 'utils'
+import { useTranslation } from 'contexts/Localization'
+import ExpandableSectionButton from 'components/ExpandableSectionButton'
+import { BASE_ADD_LIQUIDITY_URL } from 'config'
+import { getAddress } from 'utils/addressHelpers'
+import getLiquidityUrlPathParts from 'utils/getLiquidityUrlPathParts'
+import DetailsSection from './DetailsSection'
+import CardHeading from './CardHeading'
+import CardActionsContainer from './CardActionsContainer'
+import ApyButton from './ApyButton'
+import useFarmApy from '../../hooks/useFarmApy'
+export interface FarmWithStakedValue extends Farm {
+  apr?: number
+  lpRewardsApr?: number
+  liquidity?: BigNumber
+}
+
+const StyledCard = styled(Card)`
+  align-self: baseline;
+`
+
+const FarmCardInnerContainer = styled(Flex)`
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 24px;
+`
+
+const ExpandingWrapper = styled.div`
+  padding: 24px;
+  border-top: 2px solid ${({ theme }) => theme.colors.cardBorder};
+  overflow: hidden;
+`
+
+interface FarmCardProps {
+  farm: FarmWithStakedValue
+  displayApr: string
+  removed: boolean
+  cakePrice?: BigNumber
+  account?: string
+}
+
+const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePrice, account }) => {
+  const { t } = useTranslation()
+  const { tvl, apy } = useFarmApy({ ...farm, label: farm.lpSymbol }, farm.lpAddresses['97'])
+  const [showExpandableSection, setShowExpandableSection] = useState(false)
+
+  const totalValueFormatted =
+    farm.liquidity && farm.liquidity.gt(0)
+      ? `$${farm.liquidity.toNumber().toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+      : ''
+
+  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
+
+  const liquidityUrlPathParts = getLiquidityUrlPathParts({
+    quoteTokenAddress: farm.quoteToken.address,
+    tokenAddress: farm.token.address,
+  })
+  const addLiquidityUrl = `/#/add/${liquidityUrlPathParts}`
+  const lpAddress = getAddress(farm.lpAddresses)
+  // const isPromotedFarm = farm.token.symbol === 'BHV'
+
+  return (
+    <StyledCard >
+      <FarmCardInnerContainer>
+        <CardHeading
+          lpLabel={lpLabel}
+          multiplier={farm.multiplier}
+          isCommunityFarm={farm.isCommunity}
+          token={farm.token}
+          quoteToken={farm.quoteToken}
+        />
+        {!removed && (
+          <Flex justifyContent="space-between" alignItems="center">
+            <Text>{t('APR')}:</Text>
+            <Text bold style={{ display: 'flex', alignItems: 'center' }}>
+              {!apy.isFinite() || apy.isZero() ? (
+                <>
+                  {' '}
+                  <Skeleton height={24} width={80} />
+                </>
+              ) : (
+                <ApyButton variant="text-and-button" apy={apy} />
+              )}
+            </Text>
+          </Flex>
+        )}
+
+        <CardActionsContainer
+          farm={farm}
+          lpLabel={lpLabel}
+          account={account}
+          cakePrice={cakePrice}
+          addLiquidityUrl={addLiquidityUrl}
+        />
+      </FarmCardInnerContainer>
+
+      <ExpandingWrapper>
+        <ExpandableSectionButton
+          onClick={() => setShowExpandableSection(!showExpandableSection)}
+          expanded={showExpandableSection}
+        />
+        {showExpandableSection && (
+          <DetailsSection
+            removed={removed}
+            TrueScanAddress={getTrueScanLink(lpAddress, 'address')}
+            infoAddress={`https://info.hiveswap.io/pair/${lpAddress}`}
+            tvl={tvl}
+            lpLabel={lpLabel}
+            addLiquidityUrl={addLiquidityUrl}
+          />
+        )}
+      </ExpandingWrapper>
+    </StyledCard>
+  )
+}
+
+export default FarmCard

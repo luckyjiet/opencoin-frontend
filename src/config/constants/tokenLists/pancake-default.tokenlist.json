@@ -1,0 +1,38 @@
+{
+  "name": "Hiveswap Default List",
+  "timestamp": "2021-11-04T23:57:10.982Z",
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "http://ipfs.hiveswap.io/ipfs/QmcEJ4BMAP9nLjN4mamM1Xi1K5VZTpwmbLfuHJjF5GW6y9?filename=hiveswap.png",
+  "keywords": ["hiveswap", "default"],
+  "tokens": [
+    {
+      "chainId": 97,
+      "address": "0xae13d989dac2f0debff460ac112a837c89baa7cd",
+      "name": "WBNB",
+      "symbol": "WBNB",
+      "decimals": 18,
+      "logoURI": "https://pancakeswap.finance/images/tokens/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
+    },
+    {
+      "chainId": 97,
+      "address": "0xf51389865ef62A60D38cF34bCF9BF973fbA82D4a",
+      "name": "MAP",
+      "symbol": "MAP",
+      "decimals": 18,
+      "logoURI": "http://ipfs.hiveswap.io/ipfs/QmcpENuqRxksLakBPwHDzJw6BmsJXpoa6ic6LfutZ9kN9U?filename=MAP.png"
+    },
+    {
+      "chainId": 97,
+      "address": "0x14E6385c6106B88162d619A9bE332A2055f11661",
+      "name": "BEFI",
+      "symbol": "BEFI",
+      "decimals": 18,
+      "logoURI": "http://ipfs.hiveswap.io/ipfs/QmZHyYy2Dhcu6MyYViM1f5qKH3vDX1PtV1FbWsRzT7Nk5U?filename=BEFI.png"
+    }
+  ]
+}
