@@ -1,8 +1,9 @@
 //@ts-nocheck
 import { ChainId, JSBI, Percent, Token, WETH } from '@pancakeswap/sdk'
 import { USDT,  BHV, WBNB,    } from './tokens'
+import { OPENCOIN_ROUTER_ADDRESS } from './opencoin'
 
-export const ROUTER_ADDRESS = '0x036f2081ac476492FdF4b94877a608E72bf4826E'
+export const ROUTER_ADDRESS = OPENCOIN_ROUTER_ADDRESS
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -33,8 +34,8 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  [ChainId.MAINNET]: [USDT[ChainId.MAINNET], BHV[ChainId.MAINNET], ],
-  [ChainId.TESTNET]: [WETH[ChainId.TESTNET], BHV[ChainId.TESTNET], USDT[ChainId.TESTNET]],
+  [ChainId.MAINNET]: [],
+  [ChainId.TESTNET]: [],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend

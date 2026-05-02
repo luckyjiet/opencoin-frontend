@@ -13,7 +13,7 @@ const injected = new InjectedConnector({ supportedChainIds: [chainId] })
 
 const walletconnect = new WalletConnectConnector({
   rpc: { [chainId]: rpcUrl },
-  bridge: 'https://pancakeswap.bridge.walletconnect.org/',
+  bridge: process.env.REACT_APP_WALLETCONNECT_BRIDGE || 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,
 })

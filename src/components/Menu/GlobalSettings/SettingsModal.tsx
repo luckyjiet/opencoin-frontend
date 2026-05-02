@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Text, PancakeToggle, Toggle, Flex, Modal, InjectedModalProps } from '@pancakeswap/uikit'
-import { useAudioModeManager, useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
+import { Text, Toggle, Flex, Modal, InjectedModalProps } from '@pancakeswap/uikit'
+import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
 import { useTranslation } from 'contexts/Localization'
 import { useSwapActionHandlers } from 'state/swap/hooks'
 import usePersistState from 'hooks/usePersistState'
@@ -11,21 +10,13 @@ import TransactionSettings from './TransactionSettings'
 import ExpertModal from './ExpertModal'
 import GasSettings from './GasSettings'
 
-// TODO: Temporary. Once uikit is merged with this style change, this can be removed.
-const PancakeToggleWrapper = styled.div`
-  .pancakes {
-    position: absolute;
-  }
-`
-
 const SettingsModal: React.FC<InjectedModalProps> = ({ onDismiss }) => {
   const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
   const [rememberExpertModeAcknowledgement, setRememberExpertModeAcknowledgement] = usePersistState(false, {
-    localStorageKey: 'pancake_expert_mode_remember_acknowledgement',
+    localStorageKey: 'opencoin_expert_mode_remember_acknowledgement',
   })
   const [expertMode, toggleExpertMode] = useExpertModeManager()
   const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
-  const [audioPlay, toggleSetAudioMode] = useAudioModeManager()
   const { onChangeRecipient } = useSwapActionHandlers()
 
   const { t } = useTranslation()
@@ -98,19 +89,6 @@ const SettingsModal: React.FC<InjectedModalProps> = ({ onDismiss }) => {
             }}
           />
         </Flex>
-        {/* <Flex justifyContent="space-between" alignItems="center">
-          <Flex alignItems="center">
-            <Text>{t('Flippy sounds')}</Text>
-            <QuestionHelper
-              text={t('Fun sounds to make a truly immersive pancake-flipping trading experience')}
-              placement="top-start"
-              ml="4px"
-            />
-          </Flex>
-          <PancakeToggleWrapper>
-            <PancakeToggle checked={audioPlay} onChange={toggleSetAudioMode} scale="md" />
-          </PancakeToggleWrapper>
-        </Flex> */}
       </Flex>
     </Modal>
   )

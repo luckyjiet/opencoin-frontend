@@ -2,12 +2,14 @@ import React from 'react'
 import { Flex, Button, Text } from '@pancakeswap/uikit'
 import QuestionHelper from 'components/QuestionHelper'
 import { useTranslation } from 'contexts/Localization'
-import { GAS_PRICE_GWEI, GAS_PRICE } from 'state/user/hooks/helpers'
+import { getGasPriceOptions, getGasPriceWeiOptions } from 'state/user/hooks/helpers'
 import { useGasPriceManager } from 'state/user/hooks'
 
 const GasSettings = () => {
   const { t } = useTranslation()
   const [gasPrice, setGasPrice] = useGasPriceManager()
+  const gasPriceOptions = getGasPriceOptions()
+  const gasPriceWeiOptions = getGasPriceWeiOptions()
 
   return (
     <Flex flexDirection="column">
@@ -27,33 +29,33 @@ const GasSettings = () => {
           mr="4px"
           scale="sm"
           onClick={() => {
-            setGasPrice(GAS_PRICE_GWEI.default)
+            setGasPrice(gasPriceWeiOptions.default)
           }}
-          variant={gasPrice === GAS_PRICE_GWEI.default ? 'primary' : 'tertiary'}
+          variant={gasPrice === gasPriceWeiOptions.default ? 'primary' : 'tertiary'}
         >
-          {t('Standard (%gasPrice%)', { gasPrice: GAS_PRICE.default })}
+          {t('Standard (%gasPrice%)', { gasPrice: gasPriceOptions.default })}
         </Button>
         <Button
           mt="4px"
           mr="4px"
           scale="sm"
           onClick={() => {
-            setGasPrice(GAS_PRICE_GWEI.fast)
+            setGasPrice(gasPriceWeiOptions.fast)
           }}
-          variant={gasPrice === GAS_PRICE_GWEI.fast ? 'primary' : 'tertiary'}
+          variant={gasPrice === gasPriceWeiOptions.fast ? 'primary' : 'tertiary'}
         >
-          {t('Fast (%gasPrice%)', { gasPrice: GAS_PRICE.fast })}
+          {t('Fast (%gasPrice%)', { gasPrice: gasPriceOptions.fast })}
         </Button>
         <Button
           mr="4px"
           mt="4px"
           scale="sm"
           onClick={() => {
-            setGasPrice(GAS_PRICE_GWEI.instant)
+            setGasPrice(gasPriceWeiOptions.instant)
           }}
-          variant={gasPrice === GAS_PRICE_GWEI.instant ? 'primary' : 'tertiary'}
+          variant={gasPrice === gasPriceWeiOptions.instant ? 'primary' : 'tertiary'}
         >
-          {t('Instant (%gasPrice%)', { gasPrice: GAS_PRICE.instant })}
+          {t('Instant (%gasPrice%)', { gasPrice: gasPriceOptions.instant })}
         </Button>
       </Flex>
     </Flex>

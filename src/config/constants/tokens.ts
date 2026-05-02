@@ -6,14 +6,14 @@ export const BHV: { [chainId: number]: Token } = {
     '0xea1485E431F388aEe3dFe76F1c180cD3bF704482',
     18,
     'BHV',
-    'PancakeSwap Token',
+    'OpenCoin Token',
   ),
   [ChainId.TESTNET]: new Token(
     ChainId.TESTNET,
     '0xea1485E431F388aEe3dFe76F1c180cD3bF704482',
     18,
     'BHV',
-    'PancakeSwap Token',
+    'OpenCoin Token',
   ),
 }
 //cake换成bhv
@@ -51,7 +51,7 @@ const tokens = {
       97: '0xea1485E431F388aEe3dFe76F1c180cD3bF704482',
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
   //cake换成bhv
 
@@ -62,7 +62,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
   map: {
     symbol: 'MAP',
@@ -71,7 +71,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
   bhv: {
     symbol: 'BHV',
@@ -80,7 +80,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
   syrubar: {
     symbol: 'SYRUBAR',
@@ -89,7 +89,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
   usdt: {
     symbol: 'USDT',
@@ -98,7 +98,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
   wbnb: {
     symbol: 'WBNB',
@@ -107,7 +107,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
 
   bhv_true: {
@@ -117,7 +117,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
   bhv_usdt: {
     symbol: 'BHV-USDT',
@@ -126,7 +126,7 @@ const tokens = {
 
     },
     decimals: 18,
-    projectLink: 'https://pancakeswap.finance/',
+    projectLink: '/',
   },
 
 }

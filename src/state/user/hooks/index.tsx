@@ -22,7 +22,7 @@ import {
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
 } from '../actions'
-import { deserializeToken, GAS_PRICE_GWEI, serializeToken } from './helpers'
+import { deserializeToken, resolveGasPrice, serializeToken } from './helpers'
 
 export function useAudioModeManager(): [boolean, () => void] {
   const dispatch = useDispatch<AppDispatch>()
@@ -157,8 +157,7 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
 export function useGasPrice(): string {
   const chainId = process.env.REACT_APP_CHAIN_ID
   const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
-  // return chainId === ChainId.MAINNET.toString() ? userGas : GAS_PRICE_GWEI.testnet
-  return GAS_PRICE_GWEI.testnet
+  return resolveGasPrice(chainId, userGas)
 }
 
 export function useGasPriceManager(): [string, (userGasPrice: string) => void] {

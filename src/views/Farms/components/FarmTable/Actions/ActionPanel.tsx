@@ -155,7 +155,8 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
   const lpAddress = getAddress(farm.lpAddresses)
   const contractAddress=path === '/pools2' ? getPools2Address() : getMasterChefAddress()
   const bsc = getTrueScanLink(contractAddress, 'address')
-  const info = `https://info.hiveswap.io/pair/${lpAddress}`
+  const infoBaseUrl = process.env.REACT_APP_INFO_BASE_URL
+  const info = infoBaseUrl ? `${infoBaseUrl.replace(/\/$/, '')}/pair/${lpAddress}` : getTrueScanLink(lpAddress, 'address')
   // isPools2
 
  

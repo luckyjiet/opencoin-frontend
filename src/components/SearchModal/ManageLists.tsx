@@ -74,7 +74,7 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     <div>
       <Text>{list && listVersionLabel(list.version)}</Text>
-      <LinkExternal external href={`https://ipfs.hiveswap.io/ipns/QmX9kuqNRG15Wvuwwoou5FCSCmabjkt5bQgS99EiXjKgtG/Hiveswap_Default_List_BSC_Testnet.json`}>
+      <LinkExternal external href={listUrl}>
         {t('See')}
       </LinkExternal>
       <Button variant="danger" scale="xs" onClick={handleRemoveList} disabled={Object.keys(listsByUrl).length === 1}>

@@ -1,0 +1,46 @@
+{
+  "name": "OpenCoin BSC Testnet Default List",
+  "timestamp": "2026-05-03T00:00:00.000Z",
+  "version": {
+    "major": 1,
+    "minor": 1,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "",
+  "keywords": ["opencoin", "bsc", "testnet", "default"],
+  "tokens": [
+    {
+      "chainId": 97,
+      "address": "0xae13d989dac2f0debff460ac112a837c89baa7cd",
+      "name": "Wrapped BNB",
+      "symbol": "WBNB",
+      "decimals": 18,
+      "logoURI": ""
+    },
+    {
+      "chainId": 97,
+      "address": "0xd483312DdA674e64E8a43f1dB476f745DD7AA6BF",
+      "name": "BitAsset",
+      "symbol": "BAS",
+      "decimals": 18,
+      "logoURI": ""
+    },
+    {
+      "chainId": 97,
+      "address": "0x20dE77b899F7d700d66074CfA8a0D9e374bdB7f2",
+      "name": "Beacon",
+      "symbol": "BEAC",
+      "decimals": 18,
+      "logoURI": ""
+    },
+    {
+      "chainId": 97,
+      "address": "0x73d6d29D4206F590230AA07e66a77B4C5CdC44D2",
+      "name": "Mock USDT",
+      "symbol": "USDT",
+      "decimals": 18,
+      "logoURI": ""
+    }
+  ]
+}

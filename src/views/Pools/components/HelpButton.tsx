@@ -26,7 +26,7 @@ const StyledLink = styled(Link)`
 const HelpButton = () => {
   const { t } = useTranslation()
   return (
-    <StyledLink external href="https://docs.pancakeswap.finance/syrup-pools/syrup-pool">
+    <StyledLink external href={process.env.REACT_APP_DOCS_URL || '#'}>
       <Button px={['14px', null, null, null, '20px']} variant="subtle">
         <ButtonText color="backgroundAlt" bold fontSize="16px">
           {t('Help')}

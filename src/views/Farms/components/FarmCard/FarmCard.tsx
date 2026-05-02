@@ -109,7 +109,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
           <DetailsSection
             removed={removed}
             TrueScanAddress={getTrueScanLink(lpAddress, 'address')}
-            infoAddress={`https://info.hiveswap.io/pair/${lpAddress}`}
+            infoAddress={
+              process.env.REACT_APP_INFO_BASE_URL
+                ? `${process.env.REACT_APP_INFO_BASE_URL.replace(/\/$/, '')}/pair/${lpAddress}`
+                : getTrueScanLink(lpAddress, 'address')
+            }
             tvl={tvl}
             lpLabel={lpLabel}
             addLiquidityUrl={addLiquidityUrl}

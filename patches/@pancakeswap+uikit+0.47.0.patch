@@ -1,0 +1,64 @@
+diff --git a/node_modules/@pancakeswap/uikit/dist/index.cjs.js b/node_modules/@pancakeswap/uikit/dist/index.cjs.js
+index e3931bd..497f923 100644
+--- a/node_modules/@pancakeswap/uikit/dist/index.cjs.js
++++ b/node_modules/@pancakeswap/uikit/dist/index.cjs.js
+@@ -3844,6 +3844,14 @@ var Logo$2 = function (_a) {
+         React__default['default'].createElement("path", { className: "right-eye", d: "M17.7363 15.2485C17.7363 16.2833 17.1771 17.1221 16.4873 17.1221C15.7975 17.1221 15.2383 16.2833 15.2383 15.2485C15.2383 14.2138 15.7975 13.375 16.4873 13.375C17.1771 13.375 17.7363 14.2138 17.7363 15.2485Z", fill: "#633001" })));
+ };
+ var LogoWithText = React__default['default'].memo(Logo$2, function (prev, next) { return prev.isDark === next.isDark; });
++var OpenCoinLogoWithText = function (_a) {
++    var isDark = _a.isDark, props = __rest(_a, ["isDark"]);
++    var textColor = isDark ? "#FFFFFF" : "#000000";
++    return (React__default['default'].createElement("span", __assign({}, props),
++        React__default['default'].createElement("span", { style: { display: "flex", alignItems: "center" } },
++            React__default['default'].createElement(Icon$1c, { width: "32px", height: "32px" }),
++            React__default['default'].createElement("span", { style: { marginLeft: "8px", color: textColor, fontSize: "20px", fontWeight: 700, lineHeight: 1 } }, "OpenCoin"))));
++};
+ 
+ var Icon$9 = function (props) {
+     return (React__default['default'].createElement(Svg, __assign({ viewBox: "0 0 24 24" }, props),
+@@ -3950,10 +3958,10 @@ var Logo = function (_a) {
+     var isAbsoluteUrl = href.startsWith("http");
+     var innerLogo = (React__default['default'].createElement(React__default['default'].Fragment, null,
+         React__default['default'].createElement(Icon$1c, { className: "mobile-icon" }),
+-        React__default['default'].createElement(LogoWithText, { className: "desktop-icon", isDark: isDark })));
++        React__default['default'].createElement(OpenCoinLogoWithText, { className: "desktop-icon", isDark: isDark })));
+     return (React__default['default'].createElement(Flex, null,
+         React__default['default'].createElement(MenuButton, { "aria-label": "Toggle menu", onClick: togglePush, mr: "24px" }, isPushed ? (React__default['default'].createElement(Icon$d, { width: "24px", color: "textSubtle" })) : (React__default['default'].createElement(Icon$e, { width: "24px", color: "textSubtle" }))),
+-        isAbsoluteUrl ? (React__default['default'].createElement(StyledLink, { as: "a", href: href, "aria-label": "Pancake home page" }, innerLogo)) : (React__default['default'].createElement(StyledLink, { to: href, "aria-label": "Pancake home page" }, innerLogo))));
++        isAbsoluteUrl ? (React__default['default'].createElement(StyledLink, { as: "a", href: href, "aria-label": "OpenCoin home page" }, innerLogo)) : (React__default['default'].createElement(StyledLink, { to: href, "aria-label": "OpenCoin home page" }, innerLogo))));
+ };
+ var Logo$1 = React__default['default'].memo(Logo, function (prev, next) { return prev.isPushed === next.isPushed && prev.isDark === next.isDark; });
+ var templateObject_1$g, templateObject_2$8;
+diff --git a/node_modules/@pancakeswap/uikit/dist/index.esm.js b/node_modules/@pancakeswap/uikit/dist/index.esm.js
+index 6dd5b10..5a67792 100644
+--- a/node_modules/@pancakeswap/uikit/dist/index.esm.js
++++ b/node_modules/@pancakeswap/uikit/dist/index.esm.js
+@@ -3830,6 +3830,14 @@ var Logo$2 = function (_a) {
+         React.createElement("path", { className: "right-eye", d: "M17.7363 15.2485C17.7363 16.2833 17.1771 17.1221 16.4873 17.1221C15.7975 17.1221 15.2383 16.2833 15.2383 15.2485C15.2383 14.2138 15.7975 13.375 16.4873 13.375C17.1771 13.375 17.7363 14.2138 17.7363 15.2485Z", fill: "#633001" })));
+ };
+ var LogoWithText = React.memo(Logo$2, function (prev, next) { return prev.isDark === next.isDark; });
++var OpenCoinLogoWithText = function (_a) {
++    var isDark = _a.isDark, props = __rest(_a, ["isDark"]);
++    var textColor = isDark ? "#FFFFFF" : "#000000";
++    return (React.createElement("span", __assign({}, props),
++        React.createElement("span", { style: { display: "flex", alignItems: "center" } },
++            React.createElement(Icon$1c, { width: "32px", height: "32px" }),
++            React.createElement("span", { style: { marginLeft: "8px", color: textColor, fontSize: "20px", fontWeight: 700, lineHeight: 1 } }, "OpenCoin"))));
++};
+ 
+ var Icon$9 = function (props) {
+     return (React.createElement(Svg, __assign({ viewBox: "0 0 24 24" }, props),
+@@ -3936,10 +3944,10 @@ var Logo = function (_a) {
+     var isAbsoluteUrl = href.startsWith("http");
+     var innerLogo = (React.createElement(React.Fragment, null,
+         React.createElement(Icon$1c, { className: "mobile-icon" }),
+-        React.createElement(LogoWithText, { className: "desktop-icon", isDark: isDark })));
++        React.createElement(OpenCoinLogoWithText, { className: "desktop-icon", isDark: isDark })));
+     return (React.createElement(Flex, null,
+         React.createElement(MenuButton, { "aria-label": "Toggle menu", onClick: togglePush, mr: "24px" }, isPushed ? (React.createElement(Icon$d, { width: "24px", color: "textSubtle" })) : (React.createElement(Icon$e, { width: "24px", color: "textSubtle" }))),
+-        isAbsoluteUrl ? (React.createElement(StyledLink, { as: "a", href: href, "aria-label": "Pancake home page" }, innerLogo)) : (React.createElement(StyledLink, { to: href, "aria-label": "Pancake home page" }, innerLogo))));
++        isAbsoluteUrl ? (React.createElement(StyledLink, { as: "a", href: href, "aria-label": "OpenCoin home page" }, innerLogo)) : (React.createElement(StyledLink, { to: href, "aria-label": "OpenCoin home page" }, innerLogo))));
+ };
+ var Logo$1 = React.memo(Logo, function (prev, next) { return prev.isPushed === next.isPushed && prev.isDark === next.isDark; });
+ var templateObject_1$g, templateObject_2$8;

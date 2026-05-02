@@ -4,30 +4,27 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - main
+      - test
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: true
-      matrix:
-        node: [14.x]
-
-    name: Did you fuck up again?
+    name: Unit tests
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
       - name: Run tests
-        run: yarn test --watchAll=false
+        run: npm test -- --watchAll=false

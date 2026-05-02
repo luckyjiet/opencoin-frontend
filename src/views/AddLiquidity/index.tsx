@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
+import { AddressZero } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@pancakeswap/sdk'
+import { Currency, currencyEquals, ETHER, FACTORY_ADDRESS, TokenAmount, WETH } from '@pancakeswap/sdk'
 import { Button, Text, Flex, AddIcon, CardBody, Message, useModal } from '@pancakeswap/uikit'
 import { RouteComponentProps } from 'react-router-dom'
+import { abi as IUniswapV2FactoryABI } from '@uniswap/v2-core/build/IUniswapV2Factory.json'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import { useTranslation } from 'contexts/Localization'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
@@ -28,7 +30,7 @@ import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../s
 
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useGasPrice, useIsExpertMode, useUserSlippageTolerance, usePairAdder, useTokenPairAdder } from '../../state/user/hooks'
-import { calculateGasMargin, calculateSlippageAmount, getRouterContract } from '../../utils'
+import { calculateSlippageAmount, getContract, getRouterContract } from '../../utils'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { wrappedCurrency } from '../../utils/wrappedCurrency'
 import Dots from '../../components/Loader/Dots'
@@ -36,6 +38,7 @@ import ConfirmAddModalBottom from './ConfirmAddModalBottom'
 import { currencyId } from '../../utils/currencyId'
 import PoolPriceBar from './PoolPriceBar'
 import Page from '../Page'
+import { getAddLiquidityGasLimit } from './gas'
 
 export default function AddLiquidity({
   match: {
@@ -139,6 +142,8 @@ export default function AddLiquidity({
     let method: (...args: any) => Promise<TransactionResponse>
     let args: Array<string | string[] | number>
     let value: BigNumber | null
+    const tokenA = wrappedCurrency(currencyA, chainId)
+    const tokenB = wrappedCurrency(currencyB, chainId)
     if (currencyA === ETHER || currencyB === ETHER) {
       const tokenBIsETH = currencyB === ETHER
       estimate = router.estimateGas.addLiquidityETH
@@ -168,12 +173,39 @@ export default function AddLiquidity({
       value = null
     }
 
+    let existingPair: string | undefined
+    let routerWillCreatePair = noLiquidity === true
+    if (tokenA && tokenB && !tokenA.equals(tokenB)) {
+      try {
+        const factory = getContract(FACTORY_ADDRESS, IUniswapV2FactoryABI, library)
+        existingPair = await factory.getPair(tokenA.address, tokenB.address)
+        routerWillCreatePair = existingPair === AddressZero
+      } catch (error) {
+        console.error('Failed to check pair existence before adding liquidity', error)
+      }
+    }
+
     setAttemptingTxn(true)
     await estimate(...args, value ? { value } : {})
-      .then((estimatedGasLimit) =>
-        method(...args, {
+      .then((estimatedGasLimit) => {
+        // A pair can already exist with zero liquidity. The UI still treats that
+        // as initial pricing, so the first-liquidity gas floor follows noLiquidity.
+        const isFirstLiquidityAdd = noLiquidity === true
+        const gasLimit = getAddLiquidityGasLimit(estimatedGasLimit, isFirstLiquidityAdd)
+
+        if (process.env.NODE_ENV !== 'production') {
+          console.info('[OpenCoin] add liquidity gas', {
+            noLiquidity,
+            existingPair,
+            routerWillCreatePair,
+            estimatedGasLimit: estimatedGasLimit.toString(),
+            gasLimit: gasLimit.toString(),
+          })
+        }
+
+        return method(...args, {
           ...(value ? { value } : {}),
-          gasLimit: calculateGasMargin(estimatedGasLimit),
+          gasLimit,
           gasPrice,
         }).then(async (response) => {
           setAttemptingTxn(false)
@@ -190,16 +222,14 @@ export default function AddLiquidity({
           } else if (currencyA && currencyB && chainId) {
             // If pair is null (new pool), add tokens directly to tracked pairs
             // This ensures the pool will show up in the user's liquidity list
-            const tokenA = wrappedCurrency(currencyA, chainId)
-            const tokenB = wrappedCurrency(currencyB, chainId)
             if (tokenA && tokenB && !tokenA.equals(tokenB)) {
               addTokenPair(tokenA, tokenB)
             }
           }
 
           setTxHash(response.hash)
-        }),
-      )
+        })
+      })
       .catch((err) => {
         setAttemptingTxn(false)
         // we only care if the error is something _other_ than the user rejected the tx
@@ -326,7 +356,7 @@ export default function AddLiquidity({
           title={t('Add Liquidity')}
           subtitle={t('Add liquidity to receive LP tokens')}
           helper={t(
-            'Liquidity providers earn a 0.17% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.',
+            'Liquidity providers earn a 0.30% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.',
           )}
           backTo="/pool"
         />

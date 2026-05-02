@@ -16,8 +16,13 @@ export const useGetStats = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const protocolId = process.env.REACT_APP_DEBANK_PROTOCOL_ID
+      if (!protocolId) {
+        return
+      }
+
       try {
-        const response = await fetch('https://openapi.debank.com/v1/protocol?id=bsc_pancakeswap')
+        const response = await fetch(`https://openapi.debank.com/v1/protocol?id=${encodeURIComponent(protocolId)}`)
         const responseData: DeBankTvlResponse = await response.json()
 
         setData(responseData)

@@ -19,7 +19,7 @@ import {
   updateUserFarmStakedOnly,
   FarmStakedOnly,
 } from './actions'
-import { GAS_PRICE_GWEI } from './hooks/helpers'
+import { getDefaultGasPrice } from './hooks/helpers'
 
 const currentTimestamp = () => new Date().getTime()
 
@@ -73,7 +73,7 @@ export const initialState: UserState = {
   audioPlay: false,
   isDark: false,
   userFarmStakedOnly: FarmStakedOnly.ON_FINISHED,
-  gasPrice: GAS_PRICE_GWEI.default,
+  gasPrice: getDefaultGasPrice(process.env.REACT_APP_CHAIN_ID),
 }
 
 export default createReducer(initialState, (builder) =>
