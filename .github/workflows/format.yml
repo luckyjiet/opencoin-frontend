@@ -1,29 +1,30 @@
 name: Format
 
 on:
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   commitlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v2
         with:
           configFile: .commitlintrc.json
-          helpURL: https://docs.pancakeswap.finance/code/contributing#committing
+          helpURL: https://github.com/luckyjiet/opencoin-frontend
   code:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v4
         with:
-          node-version: 14.x
+          node-version: 20
+          cache: npm
       - name: Install dependencies
-        run: yarn install
+        run: npm install --legacy-peer-deps
       - name: Run prettier
-        run: yarn format:check
+        run: npm run format:check
