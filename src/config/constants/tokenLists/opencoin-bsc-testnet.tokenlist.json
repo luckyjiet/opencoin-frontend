@@ -1,10 +1,10 @@
 {
   "name": "OpenCoin BSC Testnet Default List",
-  "timestamp": "2026-05-07T00:00:00.000Z",
+  "timestamp": "2026-05-03T00:00:00.000Z",
   "version": {
     "major": 1,
     "minor": 1,
-    "patch": 1
+    "patch": 0
   },
   "tags": {},
   "logoURI": "",
@@ -20,7 +20,7 @@
     },
     {
       "chainId": 97,
-      "address": "0x2Db70d0d3d24230E84C3A101651B46c7Ac6AA42D",
+      "address": "0xd483312DdA674e64E8a43f1dB476f745DD7AA6BF",
       "name": "BitAsset",
       "symbol": "BAS",
       "decimals": 18,
@@ -28,7 +28,7 @@
     },
     {
       "chainId": 97,
-      "address": "0xB971FFcE03D4955Fa5f92BF46554ec476e7698A2",
+      "address": "0x20dE77b899F7d700d66074CfA8a0D9e374bdB7f2",
       "name": "Beacon",
       "symbol": "BEAC",
       "decimals": 18,
