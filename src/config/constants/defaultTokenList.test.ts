@@ -3,8 +3,8 @@ import path from 'path'
 import defaultTokenList from './tokenLists'
 
 const TESTNET_DEFAULT_TOKEN_ADDRESSES = [
-  '0xd483312dda674e64e8a43f1db476f745dd7aa6bf',
-  '0x20de77b899f7d700d66074cfa8a0d9e374bdb7f2',
+  '0x2db70d0d3d24230e84c3a101651b46c7ac6aa42d',
+  '0xb971ffce03d4955fa5f92bf46554ec476e7698a2',
   '0x73d6d29d4206f590230aa07e66a77b4c5cdc44d2',
 ]
 
@@ -16,7 +16,7 @@ describe('default token list', () => {
     expect(symbols).not.toContain('BEFI')
     expect(symbols).not.toContain('MAP')
     expect(defaultTokenList.name).toBe('OpenCoin BSC Testnet Default List')
-    expect(defaultTokenList.version).toEqual({ major: 1, minor: 1, patch: 0 })
+    expect(defaultTokenList.version).toEqual({ major: 1, minor: 1, patch: 1 })
     expect(defaultTokenList.keywords).toContain('opencoin')
   })
 
